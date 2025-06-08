@@ -95,3 +95,87 @@ header, section {
 .contact-info div {
     margin: 10px;
 }
+/* === Product Page Styles === */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+
+.product-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-images {
+  flex: 1;
+}
+
+.product-images img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.thumbnail-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbnail-container img {
+  width: 80px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.product-details {
+  flex: 2;
+}
+
+.product-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-size: 20px;
+  color: #00ff99;
+  margin-bottom: 15px;
+}
+
+.sizes,
+.colors {
+  margin-bottom: 15px;
+}
+
+.sizes button,
+.colors button {
+  margin-right: 10px;
+  padding: 8px 12px;
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.sizes button:hover,
+.colors button:hover {
+  background-color: #333;
+}
+
+.buy-buttons button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #ff5500;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buy-buttons button:hover {
+  background-color: #ff3300;
+}
