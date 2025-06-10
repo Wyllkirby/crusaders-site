@@ -90,10 +90,18 @@ header, section {
     justify-content: space-around;
     flex-wrap: wrap;
     text-align: left;
+    color: black;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
 }
 
 .contact-info div {
     margin: 10px;
+    color: black;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
 }
 
 /* style */
