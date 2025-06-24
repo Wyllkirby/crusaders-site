@@ -104,11 +104,10 @@ header, section {
     width: 200px;
     background: #f2f2f2;
     text-decoration: none;
-    text-decoration: underline;
 }
 
 .product-rating {
-  color: #f4c542; /* Gold-like color */
+  color: #f4c542;
   font-size: 1.2rem;
   margin-top: 5px;
   letter-spacing: 2px;
