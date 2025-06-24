@@ -105,6 +105,14 @@ header, section {
     background: #f2f2f2;
 }
 
+.product-rating {
+  color: #f4c542;
+  font-size: 1.2rem;
+  margin-top: 5px;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
 /* style Product1*/
 
 body.dark-theme {
