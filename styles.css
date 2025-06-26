@@ -267,9 +267,11 @@ body.dark-theme {
 }
 
 .buy-now:hover {
-  background-color: #bbb;
+    background-color: #bbb;
 }
+
 /* styles cart */
+
 .body-frame {
     font-family: sans-serif;
     background: #f9f9f9;
