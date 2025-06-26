@@ -56,3 +56,79 @@ function updateCartDisplay() {
       alert(`Buying 1 x ${productTitle} (Size: ${selectedSize})`);
     });
 /* script cart*/
+        function loadCart() {
+            const cartContainer = document.getElementById('cart-container');
+            const rawItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            const grouped = {};
+            rawItems.forEach(item => {
+                const key = item.title + "_" + item.size;
+                if (!grouped[key]) {
+                    grouped[key] = { ...item, qty: 1 };
+                } else {
+                    grouped[key].qty++;
+                }
+            });
+
+            const items = Object.values(grouped);
+
+            if (items.length === 0) {
+                cartContainer.innerHTML = `<div class="empty-cart">Your cart is currently empty.</div>`;
+                return;
+            }
+
+            let total = 0;
+            cartContainer.innerHTML = "";
+
+            items.forEach((item, index) => {
+                total += item.qty * item.price;
+
+                const itemEl = document.createElement("div");
+                itemEl.className = "cart-item";
+                itemEl.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" />
+          <div class="item-details">
+            <p><strong>${item.title}</strong></p>
+            <p>Size: ${item.size}</p>
+            <p>Price: $${item.price.toFixed(2)}</p>
+            <p>Qty: ${item.qty}</p>
+          </div>
+          <div class="item-actions">
+            <button onclick="removeItem('${item.title}', '${item.size}')">🗑️ Delete</button>
+          </div>
+        `;
+                cartContainer.appendChild(itemEl);
+            });
+
+            const totalEl = document.createElement("div");
+            totalEl.className = "total";
+            totalEl.textContent = `Total: $${total.toFixed(2)}`;
+            cartContainer.appendChild(totalEl);
+        }
+
+        function removeItem(title, size) {
+            const rawItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            const newItems = [];
+
+            let removed = false;
+            for (let i = 0; i < rawItems.length; i++) {
+                if (rawItems[i].title === title && rawItems[i].size === size && !removed) {
+                    removed = true;
+                } else {
+                    newItems.push(rawItems[i]);
+                }
+            }
+
+            localStorage.setItem("cartItems", JSON.stringify(newItems));
+            updateCartCount();
+            loadCart();
+        }
+
+        function updateCartCount() {
+            const newCount = JSON.parse(localStorage.getItem("cartItems"))?.length || 0;
+            const countElement = document.getElementById("cart-count");
+            if (countElement) {
+                countElement.textContent = newCount;
+            }
+        }
+
+        loadCart();
