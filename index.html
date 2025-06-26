@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+    <div class="cart-icon" onclick="location.href='cart.html'">
+        🛒 <span id="cart-count">0</span>
+    </div>
     <header class="hero">
         <h1>CRU<br>SA<br>DERS</h1>
         <img src="logo.png" alt="Shirt" class="hero-shirt"/>
@@ -73,5 +76,9 @@
             <a href="https://www.instagram.com/usernamw0679789999?igsh=OXJoaW91anhrOXpm" target="_blank" rel="noopener noreferrer">IG</a>
         </div>
     </section>
+    <script>
+        const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        document.getElementById("cart-count").textContent = cartItems.length;
+    </script>
 </body>
 </html>
