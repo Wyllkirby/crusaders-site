@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart - Crusaders</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .cart-container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-details p {
+            margin: 4px 0;
+        }
+
+        .item-actions {
+            text-align: right;
+        }
+
+        .item-actions button {
+            background: #ff5c5c;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .empty-cart {
+            text-align: center;
+            color: #999;
+            margin-top: 50px;
+            font-size: 18px;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="history.back()" style="
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+">← Back</button>
+
+    <h1>Your Cart</h1>
+    <div class="cart-container" id="cart-container"></div>
+
+    <script>
+        function loadCart() {
+            const cartContainer = document.getElementById('cart-container');
+            const rawItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            const grouped = {};
+            rawItems.forEach(item => {
+                const key = item.title + "_" + item.size;
+                if (!grouped[key]) {
+                    grouped[key] = { ...item, qty: 1 };
+                } else {
+                    grouped[key].qty++;
+                }
+            });
+
+            const items = Object.values(grouped);
+
+            if (items.length === 0) {
+                cartContainer.innerHTML = `<div class="empty-cart">Your cart is currently empty.</div>`;
+                return;
+            }
+
+            let total = 0;
+            cartContainer.innerHTML = "";
+
+            items.forEach((item, index) => {
+                total += item.qty * item.price;
+
+                const itemEl = document.createElement("div");
+                itemEl.className = "cart-item";
+                itemEl.innerHTML = `
+          <img src="${item.image}" alt="${item.title}" />
+          <div class="item-details">
+            <p><strong>${item.title}</strong></p>
+            <p>Size: ${item.size}</p>
+            <p>Price: $${item.price.toFixed(2)}</p>
+            <p>Qty: ${item.qty}</p>
+          </div>
+          <div class="item-actions">
+            <button onclick="removeItem('${item.title}', '${item.size}')">🗑️ Delete</button>
+          </div>
+        `;
+                cartContainer.appendChild(itemEl);
+            });
+
+            const totalEl = document.createElement("div");
+            totalEl.className = "total";
+            totalEl.textContent = `Total: $${total.toFixed(2)}`;
+            cartContainer.appendChild(totalEl);
+        }
+
+        function removeItem(title, size) {
+            const rawItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            const newItems = [];
+
+            let removed = false;
+            for (let i = 0; i < rawItems.length; i++) {
+                if (rawItems[i].title === title && rawItems[i].size === size && !removed) {
+                    removed = true;
+                } else {
+                    newItems.push(rawItems[i]);
+                }
+            }
+
+            localStorage.setItem("cartItems", JSON.stringify(newItems));
+            updateCartCount();
+            loadCart();
+        }
+
+        function updateCartCount() {
+            const newCount = JSON.parse(localStorage.getItem("cartItems"))?.length || 0;
+            const countElement = document.getElementById("cart-count");
+            if (countElement) {
+                countElement.textContent = newCount;
+            }
+        }
+
+        loadCart();
+    </script>
+</body>
+
+</html>
