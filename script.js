@@ -56,35 +56,34 @@ function updateCartDisplay() {
       alert(`Buying 1 x ${productTitle} (Size: ${selectedSize})`);
     });
 /* script cart*/
-        function loadCart() {
-            const cartContainer = document.getElementById('cart-container');
-            const rawItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-            const grouped = {};
-            rawItems.forEach(item => {
-                const key = item.title + "_" + item.size;
-                if (!grouped[key]) {
-                    grouped[key] = { ...item, qty: 1 };
-                } else {
-                    grouped[key].qty++;
-                }
-            });
-
-            const items = Object.values(grouped);
-
-            if (items.length === 0) {
-                cartContainer.innerHTML = `<div class="empty-cart">Your cart is currently empty.</div>`;
-                return;
+function loadCart() {
+      const cartContainer = document.getElementById('cart-container');
+      const rawItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+      const grouped = {};
+      rawItems.forEach(item => {
+            const key = item.title + "_" + item.size;
+            if (!grouped[key]) {
+                  grouped[key] = { ...item, qty: 1 };
+            } else {
+                  grouped[key].qty++;
             }
+      });
 
-            let total = 0;
-            cartContainer.innerHTML = "";
+      const items = Object.values(grouped);
+      if (items.length === 0) {
+            cartContainer.innerHTML = `<div class="empty-cart">Your cart is currently empty.</div>`;
+            return;
+      }
 
-            items.forEach((item, index) => {
-                total += item.qty * item.price;
+      let total = 0;
+      cartContainer.innerHTML = "";
 
-                const itemEl = document.createElement("div");
-                itemEl.className = "cart-item";
-                itemEl.innerHTML = `
+      items.forEach((item, index) => {
+            total += item.qty * item.price;
+
+            const itemEl = document.createElement("div");
+            itemEl.className = "cart-item";
+            itemEl.innerHTML = `
           <img src="${item.image}" alt="${item.title}" />
           <div class="item-details">
             <p><strong>${item.title}</strong></p>
@@ -131,4 +130,4 @@ function updateCartDisplay() {
             }
         }
 
-        loadCart();
+      loadCart();
