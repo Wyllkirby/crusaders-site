@@ -1,4 +1,4 @@
-aaaaaaaaaaaaaaaaaaaaaaaaaafunction updateCartDisplay() {
+function updateCartDisplay() {
       const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
       document.getElementById("cart-count").textContent = cartItems.length;
     }
